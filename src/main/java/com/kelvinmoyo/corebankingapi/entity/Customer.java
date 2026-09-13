@@ -26,16 +26,20 @@ public class Customer {
     @Column(nullable = false, unique = true)
     private String email;
 
+    @Column(nullable = false)
+    private String passwordHash;
+
     @Column(nullable = false, updatable = false)
     private Instant createdAt;
 
     protected Customer() {
     }
 
-    public Customer(String firstName, String lastName, String email) {
+    public Customer(String firstName, String lastName, String email, String passwordHash) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+        this.passwordHash = passwordHash;
         this.createdAt = Instant.now();
     }
 
@@ -61,6 +65,10 @@ public class Customer {
 
     public String getEmail() {
         return email;
+    }
+
+    public String getPasswordHash() {
+        return passwordHash;
     }
 
     public Instant getCreatedAt() {
