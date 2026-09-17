@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -32,10 +33,10 @@ public class AccountService {
     private final TransactionMapper transactionMapper;
 
     public AccountService(AccountRepository accountRepository,
-                           CustomerRepository customerRepository,
-                           TransactionRepository transactionRepository,
-                           AccountMapper accountMapper,
-                           TransactionMapper transactionMapper) {
+                          CustomerRepository customerRepository,
+                          TransactionRepository transactionRepository,
+                          AccountMapper accountMapper,
+                          TransactionMapper transactionMapper) {
         this.accountRepository = accountRepository;
         this.customerRepository = customerRepository;
         this.transactionRepository = transactionRepository;
@@ -53,6 +54,12 @@ public class AccountService {
         Account saved = accountRepository.save(account);
 
         return accountMapper.toResponse(saved);
+    }
+
+    public List<AccountResponse> getAllAccounts() {
+        return accountRepository.findAll().stream()
+                .map(accountMapper::toResponse)
+                .toList();
     }
 
     @Transactional

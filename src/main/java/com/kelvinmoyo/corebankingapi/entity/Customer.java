@@ -2,6 +2,8 @@ package com.kelvinmoyo.corebankingapi.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -29,6 +31,10 @@ public class Customer {
     @Column(nullable = false)
     private String passwordHash;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Role role;
+
     @Column(nullable = false, updatable = false)
     private Instant createdAt;
 
@@ -40,6 +46,7 @@ public class Customer {
         this.lastName = lastName;
         this.email = email;
         this.passwordHash = passwordHash;
+        this.role = Role.CUSTOMER;
         this.createdAt = Instant.now();
     }
 
@@ -69,6 +76,10 @@ public class Customer {
 
     public String getPasswordHash() {
         return passwordHash;
+    }
+
+    public Role getRole() {
+        return role;
     }
 
     public Instant getCreatedAt() {

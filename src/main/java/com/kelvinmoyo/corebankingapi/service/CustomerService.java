@@ -4,6 +4,7 @@ import com.kelvinmoyo.corebankingapi.dto.CustomerMapper;
 import com.kelvinmoyo.corebankingapi.dto.CustomerRegistrationRequest;
 import com.kelvinmoyo.corebankingapi.dto.CustomerResponse;
 import com.kelvinmoyo.corebankingapi.entity.Customer;
+import com.kelvinmoyo.corebankingapi.exception.CustomerNotFoundException;
 import com.kelvinmoyo.corebankingapi.exception.EmailAlreadyExistsException;
 import com.kelvinmoyo.corebankingapi.repository.CustomerRepository;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -37,5 +38,11 @@ public class CustomerService {
         } catch (DataIntegrityViolationException e) {
             throw new EmailAlreadyExistsException(request.getEmail());
         }
+    }
+
+    public CustomerResponse getProfile(String email) {
+        Customer customer = customerRepository.findByEmail(email)
+                .orElseThrow(() -> new CustomerNotFoundException(email));
+        return customerMapper.toResponse(customer);
     }
 }
