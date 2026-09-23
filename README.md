@@ -8,6 +8,17 @@ Built as a portfolio project to demonstrate production-grade backend engineering
 
 *Hosted on Render's free tier — the app sleeps after ~15 minutes of inactivity. The first request after waking can take up to ~60 seconds. Hit the link once before demoing live.*
 
+## Business Use Case
+
+Retail banking APIs sit at the center of real financial risk: incorrect balance updates, replayed transactions, or leaked credentials translate directly into monetary loss and regulatory exposure. This project simulates that environment end-to-end rather than a simplified CRUD demo:
+
+- **Customer onboarding** with hashed credentials, never stored or returned in plaintext.
+- **Account and transaction management** where every balance change is atomic and auditable — a failed transaction leaves no partial trace.
+- **Tiered access**, distinguishing ordinary customers from administrative staff who can view system-wide account data.
+- **Safe retry behavior**, so a client-side network failure during a deposit or withdrawal cannot silently double-charge a customer.
+
+The engineering decisions throughout — BigDecimal for money, transactional boundaries, idempotency keys, stateless JWT auth — were chosen to hold up under the same correctness and security expectations a real banking backend would be judged against.
+
 ## Tech Stack
 
 - **Language/Runtime:** Java 25 (Microsoft build)
